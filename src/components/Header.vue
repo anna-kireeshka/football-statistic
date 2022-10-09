@@ -2,9 +2,13 @@
   <div class="wrapper">
     <div class="navigation">
       <div class="navigation-header">
-        <span class="material-symbols-outlined navigation-header__icon">
-          sports_soccer
-        </span>
+        <router-link
+          :to="{ name: 'LeagueList' }"
+        >
+          <span class="material-symbols-outlined navigation-header__icon">
+            sports_soccer
+          </span>
+        </router-link>
         <h1 class="navigation-header__title">Football statistics</h1>
       </div>
     </div>
@@ -22,7 +26,7 @@ export default {
   width: 100%;
   background: $background;
   padding: 10px 0;
-  color: #785c7a;
+  color: $font-color;
   .navigation {
     display: flex;
     justify-content: space-between;
@@ -35,6 +39,7 @@ export default {
       &__icon {
         margin-right: 25px;
         font-size: 3rem;
+        color: $font-color;
       }
     }
     &__icon {
@@ -42,15 +47,6 @@ export default {
       font-size: 2rem;
       margin-right: 16px;
       padding: 10px;
-      &:hover,
-      &:focus {
-        box-shadow: 2px 2px 3px 3px #9d9ba2;
-        background-color: #f5f5f5;
-        border-radius: 50%;
-      }
-    }
-    &__icon--theme {
-      margin: 0;
     }
   }
 }

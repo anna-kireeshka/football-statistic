@@ -6,7 +6,10 @@
       </li>
       <template v-if="list.length">
         <li class="team-list__item" v-for="item in list" :key="item.id">
-          <div class="team-list__link team" @click="showTeamCalendar(item.id, item.shortName)">
+          <div
+            class="team-list__link team"
+            @click="showTeamCalendar(item.id, item.shortName)"
+          >
             <button
               class="team__action"
               :title="`Посмотреть календарь ${item.shortName}`"
@@ -18,11 +21,7 @@
         </li>
       </template>
       <templete v-else>
-        <li
-          class="team-list__item team-list__item--sceleton"
-          v-for="item in 10"
-          :key="item"
-        ></li>
+        <Sceleton />
       </templete>
     </ul>
   </slot>
@@ -30,9 +29,10 @@
 </template>
 
 <script lang="ts" setup>
-import { defineProps, PropType } from "vue";
-import { useRouter } from "vue-router";
+import { defineProps, PropType, ref } from "vue";
+import { useRoute, useRouter } from "vue-router";
 import { TeamList } from "@/types/types";
+import Sceleton from "@/components/Sceleton.vue";
 
 const props = defineProps({
   leagueName: {
@@ -47,41 +47,44 @@ const props = defineProps({
 
 const router = useRouter();
 
+const route = useRoute();
+
+const leagueName = ref(route.params.leagueTitle);
+
+const leagueId = ref(route.params.leagueId);
+
+const code = ref(route.params.code);
+
 const showTeamCalendar = (id: number, name: string) => {
   return router.push({
     name: "TeamCalendar",
     params: {
       teamName: name,
       id: id,
-    }})
-}
+      leagueTitle: leagueName.value,
+      leagueId: leagueId.value,
+      code: code.value,
+    },
+  });
+};
 </script>
 
 <style scoped lang="scss">
 .team-list {
-  width: 70%;
-  margin: 40px auto;
+  @include contentPosition;
+  @include wrapperTable;
 
   &__item {
     list-style: none;
-    border-bottom: 1.3px solid #785c7a;
+    border-bottom: 1.3px solid $font-color;
     padding: 20px;
     &--header {
       background-color: $background;
 
       font-size: 1.4rem;
       font-weight: bold;
-      color: #785c7a;
+      color: $font-color;
     }
-  }
-  &__item--sceleton {
-    border: none;
-    margin-bottom: 10px;
-    padding: 30px;
-    background-color: #fefbff;
-    background: linear-gradient(315deg, #d7c6d9 0%, #fefbff 74%);
-
-    animation: colored 2s infinite alternate;
   }
 }
 .team {
@@ -93,15 +96,16 @@ const showTeamCalendar = (id: number, name: string) => {
     font-weight: 500;
     margin-right: 10px;
 
-    color: #785c7a;
+    color: $font-color;
   }
   &__action {
     border: none;
     padding: 10px;
+    margin-right: 5px;
     outline: none;
     background-color: transparent;
     cursor: pointer;
-    color: #785c7a;
+    color: $font-color;
     &:hover {
       background-color: #685f6e;
       border-radius: 50%;

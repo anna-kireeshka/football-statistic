@@ -2,7 +2,7 @@ import dayjs from "dayjs";
 import { TeamCalendar } from "@/types/types";
 
 export const formatDate = (utcDate: string | number): string => {
-  return dayjs(utcDate).format("YYYY-MM-DD");
+  return dayjs(utcDate).format("DD/MM/YYYY");
 };
 
 export const formatDateRange = (start: string, end: string): string[] | [] => {

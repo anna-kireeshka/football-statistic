@@ -15,6 +15,7 @@
     :alert-text="errorText"
     :type="typeAlert"
     :isShowError="isShowError"
+    v-if="isShowError"
   />
 </template>
 
@@ -71,11 +72,8 @@ const getLeagueInfo = () => {
 </script>
 
 <style scoped lang="scss">
-.wrapper {
-  padding: 40px;
-}
 .input {
-  width: 70%;
-  margin: 0 auto;
+  @include inputPosition;
+  @include wrapperTable;
 }
 </style>

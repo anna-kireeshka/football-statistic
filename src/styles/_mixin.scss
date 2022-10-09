@@ -1,0 +1,47 @@
+@mixin inputPosition {
+  margin: 0 auto 20px;
+  width: 70%;
+}
+
+@mixin contentPosition {
+  width: 70%;
+  margin: 0 auto;
+}
+
+@mixin dateInput {
+  display: flex;
+  margin-bottom: 10px;
+  width: 100%;
+  &__form {
+    position: relative;
+    margin-right: 20px;
+    z-index: 10;
+  }
+  &__input {
+    @media screen and (max-width: 700px) {
+      width: 200px;
+    }
+    @media screen and (max-width: 480px) {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+    padding: 12px;
+    width: 250px;
+  }
+}
+
+@mixin tableHeader {
+  text-align: center;
+  background: $background;
+  color: #785c7a;
+}
+
+@mixin sceleton {
+  border: none;
+  margin-bottom: 10px;
+  padding: 30px;
+  background-color: #fefbff;
+  background: linear-gradient(315deg, #d7c6d9 0%, #fefbff 74%);
+
+  animation: colored 2s infinite alternate;
+}

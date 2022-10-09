@@ -1,50 +1,60 @@
 <template>
-  <ul class="league-list" v-for="item in list" :key="item.id">
-    <li class="league-list__item league" @click="selectLeague(item.id)">
-      <div class="league-list__header">
-        <span
-          class="material-symbols-outlined league-list__icon-arrow"
-          :class="{
-            'league-list__icon-arrow--rotate': leagueItemId === item.id,
-          }"
-        >
-          expand_more
-        </span>
-        <p class="league-list__title-group">
-          {{ item.name }} / {{ item.area.name }}
-        </p>
-      </div>
-    </li>
-    <transition>
-      <li
-        class="league-list__item additionally"
-        v-if="leagueItemId === item.id"
-      >
-        <div
-          class="additionally__calendar calendar"
-          @click="openTeamOrCalendarList('calendar', item)"
-        >
-          <p class="league-list__item calendar__item">
-            <span class="material-symbols-outlined league-list__icon-arrow"> calendar_month </span>
-            <span class="calendar__title">Календарь лиги</span>
+  <template v-if="list.length">
+    <ul class="league-list" v-for="item in list" :key="item.id">
+      <li class="league-list__item league" @click="selectLeague(item.id)">
+        <div class="league-list__header">
+          <span
+            class="material-symbols-outlined league-list__icon-arrow"
+            :class="{
+              'league-list__icon-arrow--rotate': leagueItemId === item.id,
+            }"
+          >
+            expand_more
+          </span>
+          <p class="league-list__title-group">
+            {{ item.name }} / {{ item.area.name }}
           </p>
         </div>
-
-        <div class="team" @click="openTeamOrCalendarList('team', item)">
-          <div class="league-list__item team__item">
-            <span class="material-symbols-outlined league-list__icon-arrow"> list </span>
-            <p class="team__title">Список команд</p>
-          </div>
-        </div>
       </li>
-    </transition>
-  </ul>
+      <transition>
+        <li
+          class="league-list__item additionally"
+          v-if="leagueItemId === item.id"
+        >
+          <div
+            class="additionally__calendar calendar"
+            @click="openTeamOrCalendarList('calendar', item)"
+          >
+            <p class="league-list__item calendar__item">
+              <span class="material-symbols-outlined league-list__icon-arrow">
+                calendar_month
+              </span>
+              <span class="calendar__title">Календарь лиги</span>
+            </p>
+          </div>
+
+          <div class="team" @click="openTeamOrCalendarList('team', item)">
+            <div class="league-list__item team__item">
+              <span class="material-symbols-outlined league-list__icon-arrow">
+                list
+              </span>
+              <p class="team__title">Список команд</p>
+            </div>
+          </div>
+        </li>
+      </transition>
+    </ul>
+  </template>
+  <templete v-else>
+    <Sceleton class="league-list"/>
+  </templete>
 </template>
 
 <script lang="ts" setup>
 import { defineProps, PropType, ref } from "vue";
 import { LeagueList } from "@/types/types";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
+import Sceleton from "@/components/Sceleton.vue";
 
 type LinkName = "calendar" | "team";
 
@@ -56,6 +66,7 @@ const props = defineProps({
 });
 
 const leagueItemId = ref<number>(0);
+
 const router = useRouter();
 
 const selectLeague = (leagueId: number) => {
@@ -80,8 +91,8 @@ const openTeamOrCalendarList = (
   if (value === "calendar") {
     router.push({
       name: "LeagueCalendar",
-      params: { leagueTitle: name, leagueId: id, code: code},
-    })
+      params: { leagueTitle: name, leagueId: id, code: code },
+    });
   }
 };
 </script>
@@ -93,8 +104,9 @@ const openTeamOrCalendarList = (
   align-items: center;
 }
 .league-list {
-  width: 70%;
-  margin: 0 auto 20px;
+  @include contentPosition;
+  @include wrapperTable;
+  margin-bottom: 20px;
   cursor: pointer;
   &__item {
     list-style: none;
@@ -103,12 +115,13 @@ const openTeamOrCalendarList = (
   &__header {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     font-size: 1.3rem;
     font-weight: 700;
   }
   &__title-group {
     margin: 0 auto;
-    color: #785c7a;
+    color: $font-color;
   }
   .additionally {
     padding: 0;
@@ -122,7 +135,8 @@ const openTeamOrCalendarList = (
     background-color: #fff;
     border-radius: 50%;
     padding: 3px;
-    color: #785c7a;
+    color: $font-color;
+    margin-right: 7px;
   }
   &__icon-arrow--rotate {
     transform: rotate(-180deg);
@@ -140,7 +154,7 @@ const openTeamOrCalendarList = (
   &__title {
     font-size: 1.2rem;
     padding-left: 15px;
-    color: #785c7a;
+    color: $font-color;
     margin-right: 10px;
   }
 }
@@ -154,7 +168,7 @@ const openTeamOrCalendarList = (
   &__title {
     font-size: 1.2rem;
     padding-left: 15px;
-    color: #785c7a;
+    color: $font-color;
     margin-right: 10px;
   }
 }

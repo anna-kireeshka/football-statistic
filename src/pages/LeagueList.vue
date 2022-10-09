@@ -19,8 +19,8 @@ import { LeagueList } from "@/types/types";
 import { HTTP } from "@/services/api";
 
 const leagueSearchValue = ref<string>("");
-const leaguesList = ref<Array<LeagueList>>([]);
 
+const leaguesList = ref<Array<LeagueList>>([]);
 
 const getLeagueList = computed(() => {
   return leaguesList.value?.filter((el: LeagueList) =>
@@ -37,12 +37,12 @@ HTTP.get("/competitions")
   .catch((e) => console.log(e, 'error'))
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .wrapper {
   padding-top: 40px;
 }
 .input {
-  width: 70%;
-  margin-bottom: 70px;
+  @include inputPosition;
+  @include wrapperTable;
 }
 </style>

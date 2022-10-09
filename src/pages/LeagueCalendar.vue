@@ -7,7 +7,7 @@
         color="red"
       >
         <template v-slot="{ inputValue, inputEvents }">
-          <input class="date__input" :value="inputValue" v-on="inputEvents" />
+          <input class="date__input" :value="inputValue" v-on="inputEvents" placeholder="xx/xx/xxxx"/>
         </template>
       </vc-date-picker>
 
@@ -17,7 +17,7 @@
         color="red"
       >
         <template v-slot="{ inputValue, inputEvents }">
-          <input class="date__input" :value="inputValue" v-on="inputEvents" />
+          <input class="date__input" :value="inputValue" v-on="inputEvents" placeholder="xx/xx/xxxx"/>
         </template>
       </vc-date-picker>
     </div>
@@ -143,29 +143,19 @@ const filteredCalendar = computed(() => {
 
 <style scoped lang="scss">
 .wrapper {
-  width: 70%;
-  padding: 40px;
-  margin: 0 auto;
+  @include contentPosition;
+  @include wrapperTable;
+  margin-top: 20px;
+
 }
 .table {
   z-index: 0;
 }
 .date {
-  display: flex;
-  margin-bottom: 10px;
-  &__form {
-    position: relative;
-    margin-right: 20px;
-    z-index: 10;
-  }
-  &__input {
-    padding: 12px;
-    width: 250px;
-  }
+  @include dateInput;
+  @include dateFormTable;
 }
 ::v-deep(.league__header) {
-  text-align: center;
-  background: $background;
-  color: #785c7a;
+  @include tableHeader;
 }
 </style>

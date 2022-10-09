@@ -52,4 +52,14 @@ const props = defineProps({
 });
 </script>
 
-<style scoped></style>
+<style scoped lang="scss">
+::v-deep(.vgt-responsive) {
+  overflow-x: scroll;
+  @include calendarTable;
+}
+
+::v-deep(.vgt-fixed-header) {
+  width: 100%;
+  z-index: 0;
+}
+</style>
